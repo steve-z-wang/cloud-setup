@@ -2,10 +2,12 @@
 # Adds per-GPU tsp functions to ~/.bashrc
 # Run once: bash scripts/gpu_aliases.sh
 #
-# t0 python train.py  → runs on GPU 0
-# t1 python train.py  → runs on GPU 1
-# t0                   → check GPU 0 queue
+# t0 python train.py  → queues on GPU 0
+# t1 python train.py  → queues on GPU 1
+# t0                   → list GPU 0 queue
 # t0 -t ID            → tail output
+# t0 -k ID            → kill job
+# t0 -r ID            → remove job
 
 NUM_GPUS=$(nvidia-smi -L 2>/dev/null | wc -l)
 
@@ -17,14 +19,22 @@ fi
 # Remove old GPU aliases if present
 sed -i '/# GPU tsp aliases/,/# END GPU tsp aliases/d' ~/.bashrc
 
-# Write functions directly into bashrc
-# env CUDA_VISIBLE_DEVICES=N is baked in so jobs auto-use the right GPU
+# If first arg starts with '-' or no args, pass directly to tsp (management command).
+# Otherwise, prepend env CUDA_VISIBLE_DEVICES=N (queue a job).
 cat >> ~/.bashrc << 'GPUBLOCK'
 # GPU tsp aliases
-t0() { TS_SOCKET=/tmp/gpu0 tsp env CUDA_VISIBLE_DEVICES=0 "$@"; }
-t1() { TS_SOCKET=/tmp/gpu1 tsp env CUDA_VISIBLE_DEVICES=1 "$@"; }
-t2() { TS_SOCKET=/tmp/gpu2 tsp env CUDA_VISIBLE_DEVICES=2 "$@"; }
-t3() { TS_SOCKET=/tmp/gpu3 tsp env CUDA_VISIBLE_DEVICES=3 "$@"; }
+_tgpu() {
+    local gpu=$1; shift
+    if [ $# -eq 0 ] || [[ "$1" == -* ]]; then
+        TS_SOCKET=/tmp/gpu$gpu tsp "$@"
+    else
+        TS_SOCKET=/tmp/gpu$gpu tsp env CUDA_VISIBLE_DEVICES=$gpu "$@"
+    fi
+}
+t0() { _tgpu 0 "$@"; }
+t1() { _tgpu 1 "$@"; }
+t2() { _tgpu 2 "$@"; }
+t3() { _tgpu 3 "$@"; }
 # END GPU tsp aliases
 GPUBLOCK
 
