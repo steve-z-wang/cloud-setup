@@ -9,13 +9,6 @@ git clone https://github.com/steve-z-wang/cloud-setup.git /tmp/cloud-setup
 bash /tmp/cloud-setup/setup.sh
 ```
 
-Then clone your project and install deps:
-
-```bash
-bash /tmp/cloud-setup/scripts/repo.sh git@github.com:steve-z-wang/one.git
-bash /tmp/cloud-setup/scripts/deps.sh /workspace/one/requirements.txt
-```
-
 ## Scripts
 
 | Script | What it does |
@@ -24,8 +17,6 @@ bash /tmp/cloud-setup/scripts/deps.sh /workspace/one/requirements.txt
 | `scripts/system.sh` | Install system packages (tmux, htop, nvtop, tsp) |
 | `scripts/ssh.sh` | Setup SSH key for GitHub (persists on /workspace) |
 | `scripts/git.sh` | Configure git name/email |
-| `scripts/repo.sh <url>` | Clone or pull a repo to /workspace |
-| `scripts/deps.sh <req.txt>` | Install Python dependencies |
 
 ## RunPod setup
 
