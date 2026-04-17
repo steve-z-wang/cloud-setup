@@ -6,13 +6,14 @@ SSH_DIR="/workspace/.ssh"
 KEY_FILE="$SSH_DIR/id_ed25519"
 
 if [ ! -f "$KEY_FILE" ]; then
-    echo "[ssh] Generating new key..."
+    echo "  Generating new SSH key..."
     mkdir -p "$SSH_DIR"
     ssh-keygen -t ed25519 -f "$KEY_FILE" -N "" -C "cloud-gpu" -q
 else
-    echo "[ssh] Existing key found on volume."
+    echo "  Existing SSH key found on volume."
 fi
 
+echo "  Copying key to ~/.ssh..."
 mkdir -p ~/.ssh
 cp "$KEY_FILE" ~/.ssh/id_ed25519
 cp "$KEY_FILE.pub" ~/.ssh/id_ed25519.pub
@@ -27,8 +28,9 @@ cat ~/.ssh/id_ed25519.pub
 echo ""
 read -p "  Press Enter after adding the key..."
 
+echo "  Verifying GitHub access..."
 if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
-    echo "[ssh] GitHub access verified."
+    echo "  GitHub access verified."
 else
-    echo "[ssh] Warning: GitHub auth may have failed."
+    echo "  Warning: GitHub auth may have failed."
 fi

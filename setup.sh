@@ -7,23 +7,23 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)/scripts"
-SETUP_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "========================================="
 echo " Cloud GPU Setup"
 echo "========================================="
 echo ""
 
+echo "[1/3] System packages (tmux, htop, nvtop, tsp)..."
 bash "$SCRIPT_DIR/system.sh"
+
+echo "[2/3] SSH key for GitHub..."
 bash "$SCRIPT_DIR/ssh.sh"
+
+echo "[3/3] Git config..."
 bash "$SCRIPT_DIR/git.sh"
 
-bash "$SCRIPT_DIR/gpu_aliases.sh"
-
 echo ""
 echo "========================================="
-echo " Base setup complete!"
+echo " Setup complete!"
 echo "========================================="
-echo ""
-echo " Open a new shell for GPU aliases (t0, t1, ...)."
 echo ""
