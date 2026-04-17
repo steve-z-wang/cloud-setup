@@ -14,13 +14,13 @@ echo "========================================="
 echo ""
 
 echo "[1/3] System packages (tmux, htop, nvtop, tsp)..."
-bash "$SCRIPT_DIR/system.sh"
+bash "$SCRIPT_DIR/install_system.sh"
 
 echo "[2/3] SSH key for GitHub..."
-bash "$SCRIPT_DIR/ssh.sh"
+bash "$SCRIPT_DIR/setup_ssh.sh"
 
 echo "[3/3] Git config..."
-bash "$SCRIPT_DIR/git.sh"
+bash "$SCRIPT_DIR/setup_git.sh"
 
 echo ""
 echo "========================================="
