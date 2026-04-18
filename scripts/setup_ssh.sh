@@ -22,7 +22,7 @@ chmod 644 ~/.ssh/id_ed25519.pub
 ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
 
 echo ""
-echo "  Add this key to GitHub → Settings → SSH Keys:"
+echo "  Add this key at: https://github.com/settings/ssh/new"
 echo ""
 cat ~/.ssh/id_ed25519.pub
 echo ""
