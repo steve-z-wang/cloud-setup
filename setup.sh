@@ -13,14 +13,17 @@ echo " Cloud GPU Setup"
 echo "========================================="
 echo ""
 
-echo "[1/3] System packages (tmux, htop, nvtop, tsp)..."
+echo "[1/4] System packages (tmux, htop, nvtop, tsp)..."
 bash "$SCRIPT_DIR/install_system.sh"
 
-echo "[2/3] SSH key for GitHub..."
+echo "[2/4] SSH key for GitHub..."
 bash "$SCRIPT_DIR/setup_ssh.sh"
 
-echo "[3/3] Git config..."
+echo "[3/4] Git config..."
 bash "$SCRIPT_DIR/setup_git.sh"
+
+echo "[4/4] Claude Code CLI..."
+bash "$SCRIPT_DIR/install_claude_code.sh"
 
 echo ""
 echo "========================================="
